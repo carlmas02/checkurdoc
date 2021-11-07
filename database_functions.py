@@ -81,6 +81,49 @@ def insert_single_value(database,table_name,info):
 	return True
 
 
+def search_pincode(database,pincode):
+	connection = sqlite3.connect(database)
+	c = connection.cursor()
+
+	c.execute(f' SELECT name,address,username,mobile FROM doctor_info where pin_code ="{pincode}" ')
+	userinfo = c.fetchall()
+	connection.commit()
+	c.close()
+	return userinfo
+
+def add_profession(database,name,username,resp):
+	connection = sqlite3.connect(database)
+	c = connection.cursor()
+
+	if resp['surgeon'] == True:
+		c.execute(f"INSERT INTO surgeon VALUES {(name,username)}")
+
+	if resp['orthopedic'] == True:
+		c.execute(f"INSERT INTO orthopedic VALUES {(name,username)}")
+
+	if resp['mbbs'] == True:
+		c.execute(f"INSERT INTO mbbs VALUES {(name,username)}")
+
+	if resp['psychiatrist'] == True:
+		c.execute(f"INSERT INTO psychiatrist VALUES {(name,username)}")	
+
+	connection.commit()
+	c.close()
+	return True
+
+
+
+def get_user_pincode(database,user_name):
+	connection = sqlite3.connect(database)
+	c = connection.cursor()
+
+	c.execute(f' SELECT pin_code FROM patient_info where username ="{user_name}" ')
+	userinfo = c.fetchone()
+	connection.commit()
+	c.close()
+	return userinfo[0]
+
+
 def fetch_data(database,table_name):
 	'''
 	---Fetches all possible data from the given table name
@@ -93,6 +136,27 @@ def fetch_data(database,table_name):
 	connection.commit()
 	c.close()
 	return userinfo
+
+def fetch_user_data(database,table_name,user_name):
+	'''
+	---Fetches all possible data from the given table name
+	'''
+	connection = sqlite3.connect(database)
+	c = connection.cursor()
+
+	c.execute(f'SELECT * FROM {table_name} where username ="{user_name}" ')
+	userinfo = c.fetchone()
+
+	data = {"name":userinfo[0],'username':userinfo[1] ,
+        "age":userinfo[2],'mobile':userinfo[3],"password":userinfo[4],
+        'address':userinfo[5],'city':userinfo[6],"state":userinfo[7],
+        "pin_code":userinfo[8]}
+
+	connection.commit()
+	c.close()
+	return data
+
+
 
 def fetch_all_data(database,table_name):
 	'''
@@ -219,5 +283,13 @@ def create_tables(database,table_name):
 	c.close()
 
 
-#insert_single_value('doctor_data.db','doctor_info',(res['name'],res["username"],res["password"],res["mobile"],res['age'],res['address'],res['city'],res['state'],res['pin_code']))
+# #res = {"name":"Ashely Mascarenhas",'username':"ashmas" ,
+#         "age":"60",'mobile':'927458432',"password":'12345678',
+#         'address':"204 Susheel",'city':'Mumbai',"state":"Maharashtra",
+#         "pin_code":"400 103"}
+
+
+#insert_single_value('patient_data.db','patient_info',(res['name'],res["username"],res["password"],res["mobile"],res['age'],res['address'],res['city'],res['state'],res['pin_code']))
+
+
 
