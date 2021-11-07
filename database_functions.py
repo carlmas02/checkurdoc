@@ -121,6 +121,8 @@ def get_user_pincode(database,user_name):
 	userinfo = c.fetchone()
 	connection.commit()
 	c.close()
+	if len(userinfo)==0:
+		return {"r":1}
 	return userinfo[0]
 
 

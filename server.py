@@ -67,7 +67,7 @@ class Signup(Resource):
 			return {"response":401}
 
 class Login(Resource):
-	def get(self,prompt):
+	def post(self,prompt):
 		res = login_args.parse_args()
 		if prompt == "0":
 			data = database_functions.fetch_data('doctor_data.db','doctor_info')

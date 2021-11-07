@@ -1,11 +1,13 @@
 import requests
-data = {"name":"Ashely Mascarenhas",'username':"test" ,
+data = {"name":"Carl Mascarenhas",'username':"carlmas" ,
         "age":"60",'mobile':'927458432',"password":'12345678',
         'address':"204 Susheel",'city':'Mumbai',"state":"Maharashtra",
-        "pin_code":"400 092"}
+        "pin_code":"400 091"}
 
-resp = requests.put("https://checkurdoc.herokuapp.com/signup/0",data)
-print(resp.json())
+# resp = requests.put("http://127.0.0.1:2000/signup/1",data)
+# print(resp.json())
+
+
 # print(resp.json())
 
 # #data  =  {"sickness":"cold","level":"average"}
@@ -25,14 +27,14 @@ print(resp.json())
 # # data_name = database_functions.create_database('/home/testingcarl/mysite/patient_data.db') 
 
 
-# data = {"username":"parth23","password":"1234566678"}
+data = {"username":"test","password":"12345678"}
 
-# resp = requests.get("http://127.0.0.1:2000/login/0",data)
+resp = requests.post("http://127.0.0.1:2000/login/1",data)
 
-# print(resp.json())
+print(resp.json())
 
 
-# data = requests.get("http://127.0.0.1:2000/search/test")
+# data = requests.get("http://127.0.0.1:2000/search/carmas")
 
 # print(data.json())
 
@@ -46,7 +48,7 @@ print(resp.json())
 
 # data = {"sickness":"mbbs",'level':"medium"}
 
-# resp = requests.get("http://127.0.0.1:2000/patient/c",data)
+# resp = requests.get("https://checkurdoc.herokuapp.com/s/c",data)
 
 # print(resp.json())
 
