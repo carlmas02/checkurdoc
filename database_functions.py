@@ -87,9 +87,18 @@ def search_pincode(database,pincode):
 
 	c.execute(f' SELECT name,address,username,mobile FROM doctor_info where pin_code ="{pincode}" ')
 	userinfo = c.fetchall()
+	data = []
+
+	for item in userinfo:
+		temp = {"name":item[0],'Address':item[1],'username':item[2],'number':item[3]}
+		data.append(temp)
+
 	connection.commit()
 	c.close()
-	return userinfo
+	return data
+
+data = search_pincode("doctor_data.db",'400 092')
+print(data)
 
 def add_profession(database,name,username,resp):
 	connection = sqlite3.connect(database)

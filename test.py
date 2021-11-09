@@ -29,7 +29,7 @@ data = {"name":"Carl Mascarenhas",'username':"carlmas" ,
 
 data = {"username":"test","password":"12345678"}
 
-resp = requests.post("http://127.0.0.1:2000/login/1",data)
+resp = requests.get("http://127.0.0.1:2000/search/test")
 
 print(resp.json())
 
