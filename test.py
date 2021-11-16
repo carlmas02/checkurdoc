@@ -1,10 +1,19 @@
 import requests
-data = {"name":"Carl Mascarenhas",'username':"carlmas" ,
-        "age":"60",'mobile':'927458432',"password":'12345678',
-        'address':"204 Susheel",'city':'Mumbai',"state":"Maharashtra",
-        "pin_code":"400 091"}
 
-# resp = requests.put("http://127.0.0.1:2000/signup/1",data)
+data = {"patient":"Carl","username":"test","sickness":"fever",'doctor':"Maxim"}
+
+resp = requests.post("http://127.0.0.1:2000/patient/test",data)
+
+print(resp.json())
+
+
+
+# data = {"name":"Kevin Gomez",'username':"kev" ,
+#         "age":"34",'mobile':'453743257',"password":'grgrgg',
+#         'address':"Mira road, gif tower",'city':'Mumbai',"state":"Gujarat",
+#         "pin_code":"400 092"}
+
+# resp = requests.put("https://checkurdoc.herokuapp.com/signup/0",data)
 # print(resp.json())
 
 
@@ -29,9 +38,15 @@ data = {"name":"Carl Mascarenhas",'username':"carlmas" ,
 
 data = {"username":"test","password":"12345678"}
 
-resp = requests.get("http://127.0.0.1:2000/search/test")
+resp = requests.get("https://checkurdoc.herokuapp.com/search/test")
 
 print(resp.json())
+
+
+# resp = requests.get("https://checkurdoc.herokuapp.com/user/1/test")
+
+# print(resp.json())
+
 
 
 # data = requests.get("http://127.0.0.1:2000/search/carmas")

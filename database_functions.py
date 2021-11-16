@@ -159,7 +159,7 @@ def fetch_user_data(database,table_name,user_name):
 	userinfo = c.fetchone()
 
 	data = {"name":userinfo[0],'username':userinfo[1] ,
-        "age":userinfo[2],'mobile':userinfo[3],"password":userinfo[4],
+        "age":userinfo[4],'mobile':userinfo[3],"password":userinfo[2],
         'address':userinfo[5],'city':userinfo[6],"state":userinfo[7],
         "pin_code":userinfo[8]}
 
@@ -167,7 +167,7 @@ def fetch_user_data(database,table_name,user_name):
 	c.close()
 	return data
 
-
+print(fetch_user_data("doctor_data.db","doctor_info","test"))
 
 def fetch_all_data(database,table_name):
 	'''
