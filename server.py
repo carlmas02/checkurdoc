@@ -128,6 +128,16 @@ class Search(Resource):
 
 		return database_functions.search_pincode('doctor_data.db',pincode)
 
+
+class SearchScreen(Resource):
+	def get(self,pincode):
+		resp = database_functions.search_pincode('doctor_data.db',pincode)
+		if resp == -1:
+			return {"Error":"No doctors exists"}
+
+		return resp
+
+
 class Profession(Resource):
 	def get(self,name,username):
 		resp = prof.parse_args()
@@ -143,7 +153,7 @@ api.add_resource(Login,'/login/<string:prompt>')
 api.add_resource(User,'/user/<string:prompt>/<string:username>')
 api.add_resource(Search,'/search/<string:username>')
 api.add_resource(Profession,'/profession/<string:name>/<string:username>')
-
+api.add_resource(SearchScreen,'/searchscreen/<string:pincode>')
 
 if __name__ == "__main__":
 	app.run(debug =True,port=2000)

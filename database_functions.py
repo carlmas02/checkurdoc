@@ -89,6 +89,9 @@ def search_pincode(database,pincode):
 	userinfo = c.fetchall()
 	data = []
 
+	if len(userinfo) == 0:
+		return -1
+
 	for item in userinfo:
 		temp = {"name":item[0],'Address':item[1],'username':item[2],'number':item[3]}
 		data.append(temp)
@@ -97,8 +100,8 @@ def search_pincode(database,pincode):
 	c.close()
 	return data
 
-data = search_pincode("doctor_data.db",'400 092')
-print(data)
+# data = search_pincode("doctor_data.db",'400 02')
+# print(data)
 
 def add_profession(database,name,username,resp):
 	connection = sqlite3.connect(database)
@@ -167,7 +170,7 @@ def fetch_user_data(database,table_name,user_name):
 	c.close()
 	return data
 
-print(fetch_user_data("doctor_data.db","doctor_info","test"))
+
 
 def fetch_all_data(database,table_name):
 	'''

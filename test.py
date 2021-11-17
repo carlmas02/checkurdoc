@@ -2,9 +2,9 @@ import requests
 
 data = {"patient":"Carl","username":"test","sickness":"fever",'doctor':"Maxim"}
 
-resp = requests.post("http://127.0.0.1:2000/patient/test",data)
+# resp = requests.post("https://checkurdoc.herokuapp.com/patient/test",data)
 
-print(resp.json())
+# print(resp.json())
 
 
 
@@ -36,11 +36,11 @@ print(resp.json())
 # # data_name = database_functions.create_database('/home/testingcarl/mysite/patient_data.db') 
 
 
-data = {"username":"test","password":"12345678"}
+# data = {"username":"test","password":"12345678"}
 
-resp = requests.get("https://checkurdoc.herokuapp.com/search/test")
+# resp = requests.get("https://checkurdoc.herokuapp.com/search/test")
 
-print(resp.json())
+# print(resp.json())
 
 
 # resp = requests.get("https://checkurdoc.herokuapp.com/user/1/test")
@@ -68,4 +68,8 @@ print(resp.json())
 # print(resp.json())
 
 
+
+data = requests.get("http://127.0.0.1:2000/searchscreen/400 103")
+
+print(data.json())
 
