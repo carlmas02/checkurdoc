@@ -67,6 +67,17 @@ def create_new_table(database,table_name,contents):
 	return True
 
 
+def get_doctor_name(database,username):
+	connection = sqlite3.connect(database)
+	c = connection.cursor()
+
+	c.execute(f' SELECT name FROM doctor_info where username ="{username}" ')
+	userinfo = c.fetchall()
+
+	return userinfo
+
+
+
 def insert_single_value(database,table_name,info):
 	'''
 	---Inserts a single set of value 
@@ -169,6 +180,24 @@ def fetch_user_data(database,table_name,user_name):
 	connection.commit()
 	c.close()
 	return data
+
+
+def patient_history(database,username):
+	connection = sqlite3.connect(database)
+	c = connection.cursor()
+
+	data = []
+
+	c.execute(f'SELECT doctor,appointment_date FROM {username} ')
+	userinfo = c.fetchall()
+
+	for item in userinfo:
+		temp = {"doctor":item[0],'appointment_date':item[1]}
+		data.append(temp)
+
+	connection.commit()
+	c.close()
+	return data 
 
 
 

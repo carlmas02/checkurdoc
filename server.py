@@ -62,7 +62,7 @@ class Signup(Resource):
 		if prompt == "1":
 			if database_functions.check_if_data_exists('patient_data.db','patient_info',res["username"]):
 				database_functions.insert_single_value('patient_data.db','patient_info',(res['name'],res["username"],res["password"],res["mobile"],res['age'],res['address'],res['city'],res['state'],res['pin_code']))
-				#database_functions.create_new_table('patient_data.db',res["username"],['Service','username','password'])
+				database_functions.create_new_table('patient_data.db',res["username"],['doctor','appointment_date'])
 				return {"response":200}
 			return {"response":401}
 
@@ -108,8 +108,12 @@ class Patient(Resource):
 	def post(self,username):
 		args = appointment.parse_args()
 		database_functions.insert_single_value("doctor_data.db",args['doctor'],(args['patient'],args['username'],args['sickness'],timepy.get_time()) ) 
+		
+		doc_name = database_functions.get_doctor_name("doctor_data.db",args['doctor'])
+
+		database_functions.insert_single_value('patient_data.db',username,(doc_name[0][0],timepy.get_time()))
 		return 200
-		return {'time':timepy.get_time()}
+
 
 class User(Resource):
 	def get(self,prompt,username):
@@ -147,6 +151,13 @@ class Profession(Resource):
 			return {"success":201}
 		return {"error":401}
 
+class History(Resource):
+	def get(self,username):
+		
+		data = database_functions.patient_history("patient_data.db",username)
+
+		return data
+
 api.add_resource(Signup,"/signup/<string:prompt>")
 api.add_resource(Patient,'/patient/<string:username>')
 api.add_resource(Login,'/login/<string:prompt>')
@@ -154,6 +165,8 @@ api.add_resource(User,'/user/<string:prompt>/<string:username>')
 api.add_resource(Search,'/search/<string:username>')
 api.add_resource(Profession,'/profession/<string:name>/<string:username>')
 api.add_resource(SearchScreen,'/searchscreen/<string:pincode>')
+api.add_resource(History,'/history/<string:username>')
+
 
 if __name__ == "__main__":
 	app.run(debug =True,port=2000)
