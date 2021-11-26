@@ -188,11 +188,11 @@ def patient_history(database,username):
 
 	data = []
 
-	c.execute(f'SELECT doctor,appointment_date FROM {username} ')
+	c.execute(f'SELECT * FROM {username} ')
 	userinfo = c.fetchall()
 
 	for item in userinfo:
-		temp = {"doctor":item[0],'appointment_date':item[1]}
+		temp = {"doctor":item[0],'appointment_time':item[1],'appointment_date':item[2]}
 		data.append(temp)
 
 	connection.commit()
@@ -324,6 +324,55 @@ def create_tables(database,table_name):
 	connection.commit()
 
 	c.close()
+
+
+def create_medicine_db():
+	connection = sqlite3.connect("medicine_data.db")
+	c = connection.cursor()
+
+	c.execute(f'''CREATE TABLE IF NOT EXISTS medicine 
+						( name text,
+						  brand text,
+						  quantity text,
+						  uses text
+						)
+			''')
+
+	connection.commit()
+
+	c.close()
+
+def add_medicine(name,brand,quantity,uses):
+	connection = sqlite3.connect("medicine_data.db")
+	c = connection.cursor()
+
+	c.execute(f"INSERT INTO medicine VALUES {(name,brand,quantity,uses)}")
+
+	connection.commit()
+
+	c.close()
+
+
+#add_medicine("Hydrochlorothiazide","Microzide","25 mg","Blood Pressure")
+
+
+def get_appointment_list(username):
+	connection = sqlite3.connect("doctor_data.db")
+	c = connection.cursor()
+
+	c.execute(f" SELECT * from {username} ")
+
+	data = c.fetchall()
+
+	return_data = []
+
+	for item in data:
+		return_data.append({"patient":item[0],"username":item[1],"sickness":item[2],"appointment_time":item[3],"appointment_date":item[4]})
+
+	return return_data
+
+
+# def alter_table():
 
 
 # #res = {"name":"Ashely Mascarenhas",'username':"ashmas" ,

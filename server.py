@@ -13,6 +13,7 @@ database_functions.create_new_table("doctor_data.db",'surgeon',['name','username
 database_functions.create_new_table("doctor_data.db",'mbbs',['name','username'])
 database_functions.create_new_table("doctor_data.db",'orthopedic',['name','username'])
 database_functions.create_new_table("doctor_data.db",'psychiatrist',['name','username'])
+database_functions.create_medicine_db()
 
 database_functions.create_new_table('doctor_data.db','doctor_info',['name','username','password','mobile','age','address','city','state','pin_code'])
 database_functions.create_new_table('patient_data.db','patient_info',['name','username','password','mobile','age','address','city','state','pin_code'])
@@ -56,13 +57,13 @@ class Signup(Resource):
 		if prompt == "0":
 			if database_functions.check_if_data_exists('doctor_data.db','doctor_info',res["username"]):
 				database_functions.insert_single_value('doctor_data.db','doctor_info',(res['name'],res["username"],res["password"],res["mobile"],res['age'],res['address'],res['city'],res['state'],res['pin_code']))
-				database_functions.create_new_table('doctor_data.db',res["username"],['patient','username','sickness','appointment_date'])
+				database_functions.create_new_table('doctor_data.db',res["username"],['patient','username','sickness','appointment_time','appointment_date'])
 				return {"response":200}
 			return {"response":401}
 		if prompt == "1":
 			if database_functions.check_if_data_exists('patient_data.db','patient_info',res["username"]):
 				database_functions.insert_single_value('patient_data.db','patient_info',(res['name'],res["username"],res["password"],res["mobile"],res['age'],res['address'],res['city'],res['state'],res['pin_code']))
-				database_functions.create_new_table('patient_data.db',res["username"],['doctor','appointment_date'])
+				database_functions.create_new_table('patient_data.db',res["username"],['doctor','appointment_time','appointment_date'])
 				return {"response":200}
 			return {"response":401}
 
@@ -107,11 +108,13 @@ class Patient(Resource):
 
 	def post(self,username):
 		args = appointment.parse_args()
-		database_functions.insert_single_value("doctor_data.db",args['doctor'],(args['patient'],args['username'],args['sickness'],timepy.get_time()) ) 
+		data = timepy.get_time()
+
+		database_functions.insert_single_value("doctor_data.db",args['doctor'],(args['patient'],args['username'],args['sickness'],data[0],str(data[1]) ) ) 
 		
 		doc_name = database_functions.get_doctor_name("doctor_data.db",args['doctor'])
 
-		database_functions.insert_single_value('patient_data.db',username,(doc_name[0][0],timepy.get_time()))
+		database_functions.insert_single_value('patient_data.db',username,(doc_name[0][0],data[0],str(data[1]) ))
 		return 200
 
 
@@ -141,14 +144,13 @@ class SearchScreen(Resource):
 
 		return resp
 
-
 class Profession(Resource):
 	def get(self,name,username):
 		resp = prof.parse_args()
 
 		prompt = database_functions.add_profession("doctor_data.db",name,username,resp)
 		if prompt==True:
-			return {"success":201}
+			return {"success":200}
 		return {"error":401}
 
 class History(Resource):
@@ -158,6 +160,14 @@ class History(Resource):
 
 		return data
 
+
+class Appointments(Resource):
+	def get(self,username):
+		data = database_functions.get_appointment_list(username)
+		return data
+
+
+
 api.add_resource(Signup,"/signup/<string:prompt>")
 api.add_resource(Patient,'/patient/<string:username>')
 api.add_resource(Login,'/login/<string:prompt>')
@@ -166,7 +176,7 @@ api.add_resource(Search,'/search/<string:username>')
 api.add_resource(Profession,'/profession/<string:name>/<string:username>')
 api.add_resource(SearchScreen,'/searchscreen/<string:pincode>')
 api.add_resource(History,'/history/<string:username>')
-
+api.add_resource(Appointments,"/appointment/<string:username>")
 
 if __name__ == "__main__":
 	app.run(debug =True,port=2000)
