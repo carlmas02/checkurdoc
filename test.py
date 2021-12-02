@@ -8,8 +8,8 @@ data = {"patient":"Carl","username":"test","sickness":"fever",'doctor':"Maxim"}
 
 
 
-# data = {"name":"w",'username':"Merw" ,
-#         "age":"19",'mobile':'453743257',"password":'12345678',
+# data = {"name":"James",'username':"james" ,
+#         "age":"25",'mobile':'453743257',"password":'1234',
 #         'address':"Ic Colony",'city':'Mumbai',"state":"Maharashtra",
 #         "pin_code":"400 103"}
 
@@ -18,18 +18,28 @@ data = {"patient":"Carl","username":"test","sickness":"fever",'doctor':"Maxim"}
 
 # print(resp.json())
 
+
+data = {"patient":"Reuben Fernandes","username":"wow","sickness":"fever",'doctor':"james"}
+
+resp = requests.get("http://127.0.0.1:2000/prescreption/reuben")
+
+print(resp.json())
+
+
+
+
+
 data = {"patient":"Reuben Fernandes","username":"reuben","sickness":"fever",'doctor':"Merw"}
 
-data = requests.get('http://127.0.0.1:2000/appointment/Merw',data)
+# data = requests.get('https://checkurdoc.herokuapp.com/appointment/Merw',data)
 
-print(data.json())
-
-
+# print(data.json())
 
 
 
+# data = {"username":"carl04","name":"paracetoemol","brand":"Crocin","quantity":"1 Strip","duration":"Twice a day","doctor":"Maxim"}
 
-
+# print(requests.post("http://127.0.0.1:2000/prescreption",data).json())
 
 
 

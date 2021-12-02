@@ -47,6 +47,16 @@ def create_new_table(database,table_name,contents):
 						)
 			''')
 
+	if len(contents) == 6:
+		c.execute(f'''CREATE TABLE IF NOT EXISTS {table_name} 
+						( {contents[0]} text,
+						  {contents[1]} text,
+						  {contents[2]} text,
+						  {contents[3]} text,
+						  {contents[4]} text,
+						  {contents[5]} text
+						)
+			''')
 	if len(contents) == 9:
 		c.execute(f'''CREATE TABLE IF NOT EXISTS {table_name} 
 						( {contents[0]} text,
@@ -352,8 +362,40 @@ def add_medicine(name,brand,quantity,uses):
 
 	c.close()
 
+def get_medicine():
+	connection = sqlite3.connect("medicine_data.db")
+	c = connection.cursor()
+
+	c.execute(f"SELECT * from medicine ")
+
+	data = c.fetchall()
+
+	return_data = []
+
+	for item in data:
+		return_data.append({"name":item[0],"brand":item[1],"quantity":item[2],"uses":item[3] })
+
+	return return_data
+
+
 
 #add_medicine("Hydrochlorothiazide","Microzide","25 mg","Blood Pressure")
+
+
+def confirm_appointment(username,doctor_username):
+	connection = sqlite3.connect("doctor_data.db")
+	c = connection.cursor()
+
+	c.execute(f"UPDATE {doctor_username} SET appointment_status = 1 WHERE username = '{username}' ")
+
+	connection.commit()
+
+	c.close()
+
+	return True
+
+
+#confirm_appointment("wow","james")
 
 
 def get_appointment_list(username):
@@ -372,7 +414,48 @@ def get_appointment_list(username):
 	return return_data
 
 
-# def alter_table():
+def add_patient_prescription(details):
+	connection = sqlite3.connect("medicine_data.db")
+	c = connection.cursor()
+
+	c.execute(f'''CREATE TABLE IF NOT EXISTS prescription 
+						( username text,
+						  name text,
+						  brand text,
+						  quantity text,
+						  duration text,
+						  doctor text
+						)
+			''')
+
+	connection.commit()
+
+	c.execute(f"INSERT INTO prescription VALUES {details}")
+
+	connection.commit()
+
+	c.close()
+
+def get_prescription(username):
+	connection = sqlite3.connect("medicine_data.db")
+	c = connection.cursor()
+
+	c.execute(f" SELECT * from prescription WHERE username = '{username}' ")
+
+	data = c.fetchall()
+
+	return_data = []
+
+	for item in data:
+		return_data.append({"name":item[1],"brand":item[2],"quantity":item[3],"duration":item[4],"doctor":item[5]})
+
+	return return_data
+
+# get_prescription('carl04')
+
+
+
+# add_patient_prescription(("carl04","a","b","c","d","maxim"))
 
 
 # #res = {"name":"Ashely Mascarenhas",'username':"ashmas" ,
@@ -382,6 +465,7 @@ def get_appointment_list(username):
 
 
 #insert_single_value('patient_data.db','patient_info',(res['name'],res["username"],res["password"],res["mobile"],res['age'],res['address'],res['city'],res['state'],res['pin_code']))
+
 
 
 

@@ -51,19 +51,28 @@ prof.add_argument("orthopedic",type=bool,help="orthopedic response",required=Tru
 prof.add_argument("psychiatrist",type=bool,help="psychiatrist response",required=True)
 
 
+add_presc = reqparse.RequestParser()
+add_presc.add_argument("username",type=str,help="Username of pateint",required=True)
+add_presc.add_argument("name",type=str,help="Name of medicine",required=True)
+add_presc.add_argument("brand",type=str,help="Brand of medicine",required=True)
+add_presc.add_argument("quantity",type=str,help="Quantity of medicine",required=True)
+add_presc.add_argument("duration",type=str,help="Duration of medicine",required=True)
+add_presc.add_argument("doctor",type=str,help="Name of doctor",required=True)
+
+
 class Signup(Resource):
 	def put(self,prompt):
 		res = signup_put_args.parse_args()
 		if prompt == "0":
 			if database_functions.check_if_data_exists('doctor_data.db','doctor_info',res["username"]):
 				database_functions.insert_single_value('doctor_data.db','doctor_info',(res['name'],res["username"],res["password"],res["mobile"],res['age'],res['address'],res['city'],res['state'],res['pin_code']))
-				database_functions.create_new_table('doctor_data.db',res["username"],['patient','username','sickness','appointment_time','appointment_date'])
+				database_functions.create_new_table('doctor_data.db',res["username"],['patient','username','sickness','appointment_time','appointment_date','appointment_status'])
 				return {"response":200}
 			return {"response":401}
 		if prompt == "1":
 			if database_functions.check_if_data_exists('patient_data.db','patient_info',res["username"]):
 				database_functions.insert_single_value('patient_data.db','patient_info',(res['name'],res["username"],res["password"],res["mobile"],res['age'],res['address'],res['city'],res['state'],res['pin_code']))
-				database_functions.create_new_table('patient_data.db',res["username"],['doctor','appointment_time','appointment_date'])
+				database_functions.create_new_table('patient_data.db',res["username"],['doctor','appointment_time','appointment_date','appointment_status'])
 				return {"response":200}
 			return {"response":401}
 
@@ -110,12 +119,12 @@ class Patient(Resource):
 		args = appointment.parse_args()
 		data = timepy.get_time()
 
-		database_functions.insert_single_value("doctor_data.db",args['doctor'],(args['patient'],args['username'],args['sickness'],data[0],str(data[1]) ) ) 
+		database_functions.insert_single_value("doctor_data.db",args['doctor'],(args['patient'],args['username'],args['sickness'],data[0],str(data[1]),0 ) ) 
 		
 		doc_name = database_functions.get_doctor_name("doctor_data.db",args['doctor'])
 
-		database_functions.insert_single_value('patient_data.db',username,(doc_name[0][0],data[0],str(data[1]) ))
-		return 200
+		database_functions.insert_single_value('patient_data.db',username,(doc_name[0][0],data[0],str(data[1]),0 ))
+		return {"success":200}
 
 
 class User(Resource):
@@ -162,8 +171,38 @@ class History(Resource):
 
 
 class Appointments(Resource):
-	def get(self,username):
+	def get(self,username,doctor_username):
 		data = database_functions.get_appointment_list(username)
+		return data
+
+	def post(self,username,doctor_username):
+		
+		resp = database_functions.confirm_appointment(username,doctor_username)
+		if resp == True:
+			return {"success":200}
+		return {"error":400}
+
+class Prescreption(Resource):
+	def post(self,username):
+		#use username argument only for get method
+		data = add_presc.parse_args()
+
+		database_functions.add_patient_prescription((data['username'],data['name'],data['brand'],data['quantity'],data['duration'],data['doctor']))
+		return 200
+
+	def get(self,username):
+
+		data = database_functions.get_prescription(username)
+
+		return data
+
+
+
+class Medicine(Resource):
+	def get(self):
+
+		data = database_functions.get_medicine()
+
 		return data
 
 
@@ -176,7 +215,10 @@ api.add_resource(Search,'/search/<string:username>')
 api.add_resource(Profession,'/profession/<string:name>/<string:username>')
 api.add_resource(SearchScreen,'/searchscreen/<string:pincode>')
 api.add_resource(History,'/history/<string:username>')
-api.add_resource(Appointments,"/appointment/<string:username>")
+api.add_resource(Appointments,"/appointment/<string:username>/<string:doctor_username>")
+api.add_resource(Prescreption,"/prescreption/<string:username>")
+
+
 
 if __name__ == "__main__":
 	app.run(debug =True,port=2000)
