@@ -20,11 +20,11 @@ data = {"name":"Parbat",'username':"parbat" ,
 # print(resp.json())
 
 
-# data = {"username":"ramesh","password":"1234"}
+data = {"username":"parbat","password":"222"}
 
-# resp = requests.get("https://checkurdoc.herokuapp.com/login/1",data)
+resp = requests.post("https://checkurdoc.herokuapp.com/login/1",data)
 
-# print(resp.json())
+print(resp.json())
 
 
 

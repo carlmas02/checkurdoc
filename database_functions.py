@@ -402,7 +402,7 @@ def confirm_appointment(username,doctor_username):
 	c.close()
 	return True
 
-confirm_appointment("parbat","mehul")
+
 
 
 def get_appointment_list(username):
