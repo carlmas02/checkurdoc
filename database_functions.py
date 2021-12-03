@@ -392,10 +392,17 @@ def confirm_appointment(username,doctor_username):
 
 	c.close()
 
+	conn = sqlite3.connect("patient_data.db")
+	c = conn.cursor()
+
+	c.execute(f"UPDATE '{username}' SET appointment_status = 1 WHERE username = '{username}' ")
+	
+	conn.commit()
+
+	c.close()
 	return True
 
-
-#confirm_appointment("wow","james")
+confirm_appointment("parbat","mehul")
 
 
 def get_appointment_list(username):
