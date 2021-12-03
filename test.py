@@ -6,12 +6,13 @@ data = {"patient":"Carl","username":"test","sickness":"fever",'doctor':"Maxim"}
 
 # print(resp.json())
 
+# doc  issac -> 1234
+#pat    ramesh -> 12345
 
-
-# data = {"name":"James",'username':"james" ,
-#         "age":"25",'mobile':'453743257',"password":'1234',
-#         'address':"Ic Colony",'city':'Mumbai',"state":"Maharashtra",
-#         "pin_code":"400 103"}
+data = {"name":"Issac",'username':"issac" ,
+        "age":"30",'mobile':'453745257',"password":'12345',
+        'address':"Ic Colony",'city':'Mumbai',"state":"Maharashtra",
+        "pin_code":"400 103"}
 
 
 # resp = requests.put("http://127.0.0.1:2000/signup/0",data)
@@ -19,19 +20,72 @@ data = {"patient":"Carl","username":"test","sickness":"fever",'doctor':"Maxim"}
 # print(resp.json())
 
 
-data = {"patient":"Reuben Fernandes","username":"wow","sickness":"fever",'doctor':"james"}
-
-resp = requests.get("http://127.0.0.1:2000/prescreption/reuben")
+resp = requests.get("http://127.0.0.1:2000/user/0/issac")
 
 print(resp.json())
 
 
+# resp = requests.get("https://checkurdoc.herokuapp.com/searchscreen/400 103")
+
+# print(resp.json())
+
+
+# resp = requests.post("https://checkurdoc.herokuapp.com/patient/ramesh")
+
+# print(resp.json())
 
 
 
-data = {"patient":"Reuben Fernandes","username":"reuben","sickness":"fever",'doctor':"Merw"}
 
-# data = requests.get('https://checkurdoc.herokuapp.com/appointment/Merw',data)
+# data = {"patient":"Ramesh","username":"ramesh",'sickness':"fever",'doctor':"issac"}
+
+# resp = requests.post("https://checkurdoc.herokuapp.com/patient/ramesh",data)
+
+# print(resp.json())
+
+
+
+
+# resp = requests.get("https://checkurdoc.herokuapp.com/appointment/issac/issac")
+
+# print(resp.json())
+
+
+
+
+# resp = requests.post("https://checkurdoc.herokuapp.com/appointment/ramesh/issac")
+
+# print(resp.json())
+
+
+data = {"username":"ramesh","name":"paracetoemol","brand":"Crocin","quantity":"1 Strip",
+                "duration":"Twice a day","doctor":"issac"}
+
+
+# resp = requests.post("https://checkurdoc.herokuapp.com/prescreption/xyz",data)
+
+# print(resp.json())
+
+# resp = requests.get("https://checkurdoc.herokuapp.com/prescreption/ramesh")
+
+# print(resp.json())
+
+
+
+
+data = {"patient":"Reuben Fernandes","username":"wow","sickness":"fever",'doctor':"james"}
+
+#resp = requests.get("http://127.0.0.1:2000/prescreption/reuben")
+
+#print(resp.json())
+
+
+
+
+
+# data = {"patient":"Reuben Fernandes","username":"reuben","sickness":"fever",'doctor':"Merw"}
+
+# data = requests.post('https://checkurdoc.herokuapp.com/appointment/Merw/wow')
 
 # print(data.json())
 
@@ -167,5 +221,9 @@ data = {''}
 
 # data = requests.get("https://checkurdoc.herokuapp.com/user/0/maxim35")
 
+
+# print(data.json())
+
+# data = requests.get("http://127.0.0.1:2000/medicine")
 
 # print(data.json())

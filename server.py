@@ -172,6 +172,7 @@ class History(Resource):
 
 class Appointments(Resource):
 	def get(self,username,doctor_username):
+		#doctor_username not used  (username -> doctors username)
 		data = database_functions.get_appointment_list(username)
 		return data
 
@@ -191,9 +192,7 @@ class Prescreption(Resource):
 		return 200
 
 	def get(self,username):
-
 		data = database_functions.get_prescription(username)
-
 		return data
 
 
@@ -217,7 +216,7 @@ api.add_resource(SearchScreen,'/searchscreen/<string:pincode>')
 api.add_resource(History,'/history/<string:username>')
 api.add_resource(Appointments,"/appointment/<string:username>/<string:doctor_username>")
 api.add_resource(Prescreption,"/prescreption/<string:username>")
-
+api.add_resource(Medicine,"/medicine")
 
 
 if __name__ == "__main__":
