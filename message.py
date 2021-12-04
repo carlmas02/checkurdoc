@@ -18,3 +18,15 @@ def send_message(doctor,patient,time,date,number):
 
 
 		)
+
+
+def test():
+	msg = client.messages.create(
+
+		body = f"test msg",
+		
+		from_ = "+18309884967", 
+		to = "+919820758390",
+
+
+		)

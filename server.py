@@ -184,12 +184,13 @@ class Appointments(Resource):
 		data = database_functions.get_appointment_list(username)
 		return data
 
+	#check 
 	def post(self,username,doctor_username):
 		data = conf_app.parse_args()
-		#resp = database_functions.confirm_appointment(username,doctor_username)
+		resp = database_functions.confirm_appointment(username,doctor_username)
 		message.send_message(doctor_username,username,data["time"],data["date"],data["number"])
-		# if resp == True:
-		# 	return {"success":200}
+		if resp == True:
+			return {"success":200}
 		return {"error":400}
 
 class Prescreption(Resource):
@@ -214,6 +215,12 @@ class Medicine(Resource):
 		return data
 
 
+class Message(Resource):
+	def get(self):
+		message.test()
+		return 200
+
+
 
 api.add_resource(Signup,"/signup/<string:prompt>")
 api.add_resource(Patient,'/patient/<string:username>')
@@ -226,7 +233,7 @@ api.add_resource(History,'/history/<string:username>')
 api.add_resource(Appointments,"/appointment/<string:username>/<string:doctor_username>")
 api.add_resource(Prescreption,"/prescreption/<string:username>")
 api.add_resource(Medicine,"/medicine")
-
+api.add_resource(Message,"/message")
 
 if __name__ == "__main__":
 	app.run(debug =True,port=2000)

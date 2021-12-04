@@ -53,15 +53,17 @@ data = {"name":"Parbat",'username':"parbat" ,
 
 
 
-
-
-
-
-data = {'doctor':"mehul","patient":"Parbat","time":"12am","date":"23-12-2021","number":"9820758390"}
-
-resp = requests.post("https://checkurdoc.herokuapp.com/appointment/parbat/mehul",data)
+resp = requests.get("http://127.0.0.1:2000/message")
 
 print(resp.json())
+
+
+
+# data = {'doctor':"mehul","patient":"Parbat","time":"12am","date":"23-12-2021","number":"9820758390"}
+
+# resp = requests.post("https://checkurdoc.herokuapp.com/appointment/parbat/mehul",data)
+
+# print(resp.json())
 
 # resp = requests.get("http://127.0.0.1:2000/appointment/mehul/issac")
 
