@@ -20,11 +20,11 @@ data = {"name":"Parbat",'username':"parbat" ,
 # print(resp.json())
 
 
-data = {"username":"parbat","password":"222"}
+# data = {"username":"parbat","password":"222"}
 
-resp = requests.post("https://checkurdoc.herokuapp.com/login/1",data)
+# resp = requests.post("https://checkurdoc.herokuapp.com/login/1",data)
 
-print(resp.json())
+# print(resp.json())
 
 
 
@@ -59,11 +59,11 @@ print(resp.json())
 # print(resp.json())
 
 
+data = {'doctor':"mehul","patient":"Parbat","time":"12am","date":"23-12-2021","number":"1234"}
 
+resp = requests.post("http://127.0.0.1:2000/appointment/parbat/mehul",data)
 
-# resp = requests.post("http://127.0.0.1:2000/appointment/parbat/mehul")
-
-# print(resp.json())
+print(resp.json())
 
 
 data = {"username":"ramesh","name":"paracetoemol","brand":"Crocin","quantity":"1 Strip",

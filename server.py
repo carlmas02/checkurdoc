@@ -2,6 +2,8 @@ from flask import Flask, request
 from flask_restful import Resource, Api,reqparse
 import database_functions
 import timepy
+import message
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -58,6 +60,12 @@ add_presc.add_argument("brand",type=str,help="Brand of medicine",required=True)
 add_presc.add_argument("quantity",type=str,help="Quantity of medicine",required=True)
 add_presc.add_argument("duration",type=str,help="Duration of medicine",required=True)
 add_presc.add_argument("doctor",type=str,help="Name of doctor",required=True)
+
+conf_app = reqparse.RequestParser()
+conf_app.add_argument("time",type=str,help="Appointment time",required=True)
+conf_app.add_argument("date",type=str,help="Appointment date",required=True)
+conf_app.add_argument("number",type=str,help="number of pateint",required=True)
+
 
 
 class Signup(Resource):
@@ -177,8 +185,9 @@ class Appointments(Resource):
 		return data
 
 	def post(self,username,doctor_username):
-		
+		data = conf_app.parse_args()
 		resp = database_functions.confirm_appointment(username,doctor_username)
+		message.send_message(doctor_username,username,data["time"],data["date"],data["number"])
 		if resp == True:
 			return {"success":200}
 		return {"error":400}
