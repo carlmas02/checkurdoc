@@ -186,7 +186,7 @@ class Appointments(Resource):
 
 	def post(self,username,doctor_username):
 		data = conf_app.parse_args()
-		resp = database_functions.confirm_appointment(username,doctor_username)
+		#resp = database_functions.confirm_appointment(username,doctor_username)
 		message.send_message(doctor_username,username,data["time"],data["date"],data["number"])
 		if resp == True:
 			return {"success":200}
