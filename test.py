@@ -47,27 +47,29 @@ data = {"name":"Parbat",'username':"parbat" ,
 
 # data = {"patient":"Parbat","username":"parbat",'sickness':"cough",'doctor':"mehul"}
 
-# resp = requests.post("https://checkurdoc.herokuapp.com/patient/parbat",data)
+# resp = requests.post("http://127.0.0.1:2000/patient/parbat",data)
 
 # print(resp.json())
 
 
 
-resp = requests.get("http://127.0.0.1:2000/message")
+# resp = requests.get("http://127.0.0.1:2000/message")
+
+# print(resp.json())
+
+
+
+data = {'doctor':"mehul","patient":"Parbat","time":"12am","date":"23-12-2021","number":"9820758390"}
+
+resp = requests.post("http://127.0.0.1:2000/appointment/parbat/mehul",data)
 
 print(resp.json())
 
 
 
-# data = {'doctor':"mehul","patient":"Parbat","time":"12am","date":"23-12-2021","number":"9820758390"}
+resp = requests.get("http://127.0.0.1:2000/appointment/mehul/issac")
 
-# resp = requests.post("https://checkurdoc.herokuapp.com/appointment/parbat/mehul",data)
-
-# print(resp.json())
-
-# resp = requests.get("http://127.0.0.1:2000/appointment/mehul/issac")
-
-# print(resp.json())
+print(resp.json())
 
 
 data = {"username":"ramesh","name":"paracetoemol","brand":"Crocin","quantity":"1 Strip",
