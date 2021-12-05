@@ -19,12 +19,6 @@ def send_message(doctor,patient,time,date,number):
 
 		)
 
-data = {'doctor':"mehul","patient":"Parbat","time":"12am","date":"23-12-2021","number":"9820758390"}
-
-# send_message("xyz","rum",data["time"],data["date"],data["number"])
-
-
-
 def test():
 	msg = client.messages.create(
 
