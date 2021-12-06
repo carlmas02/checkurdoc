@@ -190,7 +190,7 @@ class Appointments(Resource):
 		resp = database_functions.confirm_appointment(username,doctor_username)
 		
 		mobile = database_functions.get_phone_number(username)
-		message.send_message(doctor_username,username,data["time"],data["date"],mobile["number"])
+		#message.send_message(doctor_username,username,data["time"],data["date"],mobile["number"])
 		if resp == True:
 			return {"success":200}
 		return {"error":400}
