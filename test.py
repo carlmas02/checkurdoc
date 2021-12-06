@@ -72,17 +72,17 @@ data = {"name":"Parbat",'username':"parbat" ,
 # print(resp.json())
 
 
-data = {"username":"ramesh","name":"paracetoemol","brand":"Crocin","quantity":"1 Strip",
+data = {"username":"lyann","name":"paracetoemol","brand":"Crocin","quantity":"1 Strip",
                 "duration":"Twice a day","doctor":"issac"}
 
 
-# resp = requests.post("https://checkurdoc.herokuapp.com/prescreption/xyz",data)
+# resp = requests.post("https://checkurdoc.herokuapp.com/prescreption/gifford",data)
 
 # print(resp.json())
 
-# resp = requests.get("https://checkurdoc.herokuapp.com/prescreption/ramesh")
+resp = requests.get("https://checkurdoc.herokuapp.com/prescreption/lyann")
 
-# print(resp.json())
+print(resp.json())
 
 
 
@@ -206,11 +206,6 @@ data = {''}
 
 
 
-
-# data = requests.get("https://checkurdoc.herokuapp.com/history/kevin_wow")
-
-
-# print(data.json())
 
 # ## LOGIN
 # # username  -> kevin_wow

@@ -64,7 +64,6 @@ add_presc.add_argument("doctor",type=str,help="Name of doctor",required=True)
 conf_app = reqparse.RequestParser()
 conf_app.add_argument("time",type=str,help="Appointment time",required=True)
 conf_app.add_argument("date",type=str,help="Appointment date",required=True)
-conf_app.add_argument("number",type=str,help="number of pateint",required=True)
 
 
 
@@ -187,8 +186,11 @@ class Appointments(Resource):
 	#check 
 	def post(self,username,doctor_username):
 		data = conf_app.parse_args()
+
 		resp = database_functions.confirm_appointment(username,doctor_username)
-		message.send_message(doctor_username,username,data["time"],data["date"],data["number"])
+		
+		mobile = database_functions.get_phone_number(username)
+		message.send_message(doctor_username,username,data["time"],data["date"],mobile["number"])
 		if resp == True:
 			return {"success":200}
 		return {"error":400}
@@ -220,6 +222,10 @@ class Message(Resource):
 		message.test()
 		return 200
 
+# class Number(Resource):
+# 	def get(self,username):
+# 		return {username:200}
+
 
 
 api.add_resource(Signup,"/signup/<string:prompt>")
@@ -234,6 +240,9 @@ api.add_resource(Appointments,"/appointment/<string:username>/<string:doctor_use
 api.add_resource(Prescreption,"/prescreption/<string:username>")
 api.add_resource(Medicine,"/medicine")
 api.add_resource(Message,"/message")
+#api.add_resource(Number,"/number/<string:username>")
+
+
 
 if __name__ == "__main__":
 	app.run(debug =True,port=2000)

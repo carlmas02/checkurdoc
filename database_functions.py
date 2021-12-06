@@ -386,14 +386,14 @@ def confirm_appointment(username,doctor_username):
 	connection = sqlite3.connect("doctor_data.db")
 	c = connection.cursor()
 
-	c.execute(f"DELETE from {doctor_username} WHERE username = '{username}' ")
+	c.execute(f"UPDATE {doctor_username} SET appointment_status = 1 WHERE username = '{username}' ")
 
 	connection.commit()
 
 	c.close()
 	return True
 
-# confirm_appointment("parbat","mehul")
+confirm_appointment("lyann","gifford")
 
 
 
@@ -408,9 +408,26 @@ def get_appointment_list(username):
 	return_data = []
 
 	for item in data:
-		return_data.append({"patient":item[0],"username":item[1],"sickness":item[2],"appointment_time":item[3],"appointment_date":item[4]})
+		return_data.append({"patient":item[0],"username":item[1],"sickness":item[2],"appointment_time":item[3],"appointment_date":item[4],"appointment_status":item[5]})
 
 	return return_data
+
+
+def get_phone_number(username):
+	connection = sqlite3.connect("patient_data.db")
+	c = connection.cursor()
+
+	c.execute(f"SELECT mobile from patient_info WHERE username = '{username}'")
+
+	data = c.fetchone()
+	
+	connection.commit()
+	c.close()
+
+	return {"number":data[0]}
+
+
+get_phone_number("lyann")
 
 
 def add_patient_prescription(details):
