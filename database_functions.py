@@ -270,11 +270,13 @@ def delete_user(database,username):
 	connection = sqlite3.connect(database)
 	c = connection.cursor()
 
-	c.execute(f'''DELETE from userinfo where username = '{username}' ''')
-	c.execute(f"DROP TABLE '{username}'")
+	c.execute(f'''DELETE from prescription where doctor = '{username}' ''')
+	#c.execute(f"DROP TABLE '{username}'")
 	connection.commit()
 	c.close()
 	return True
+
+
 
 
 def delete_table_data(database,table_name,service,username):
@@ -393,7 +395,7 @@ def confirm_appointment(username,doctor_username):
 	c.close()
 	return True
 
-confirm_appointment("lyann","gifford")
+# confirm_appointment("lyann","gifford")
 
 
 
@@ -427,7 +429,7 @@ def get_phone_number(username):
 	return {"number":data[0]}
 
 
-get_phone_number("lyann")
+# get_phone_number("lyann")
 
 
 def add_patient_prescription(details):
@@ -443,8 +445,6 @@ def add_patient_prescription(details):
 						  doctor text
 						)
 			''')
-
-	connection.commit()
 
 	c.execute(f"INSERT INTO prescription VALUES {details}")
 

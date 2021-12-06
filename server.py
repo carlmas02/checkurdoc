@@ -208,12 +208,9 @@ class Prescreption(Resource):
 		return data
 
 
-
 class Medicine(Resource):
 	def get(self):
-
 		data = database_functions.get_medicine()
-
 		return data
 
 
@@ -222,9 +219,6 @@ class Message(Resource):
 		message.test()
 		return 200
 
-# class Number(Resource):
-# 	def get(self,username):
-# 		return {username:200}
 
 
 
@@ -240,7 +234,7 @@ api.add_resource(Appointments,"/appointment/<string:username>/<string:doctor_use
 api.add_resource(Prescreption,"/prescreption/<string:username>")
 api.add_resource(Medicine,"/medicine")
 api.add_resource(Message,"/message")
-#api.add_resource(Number,"/number/<string:username>")
+
 
 
 
