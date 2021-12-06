@@ -200,7 +200,11 @@ class Prescreption(Resource):
 		#use username argument only for get method
 		data = add_presc.parse_args()
 
-		database_functions.add_patient_prescription((data['username'],data['name'],data['brand'],data['quantity'],data['duration'],data['doctor']))
+		mobile = database_functions.get_phone_number(data['username'])
+
+		message.send_prescription(data['username'],data["name"],data['brand'],data['quantity'],data['doctor'],mobile['number'])
+
+		#database_functions.add_patient_prescription((data['username'],data['name'],data['brand'],data['quantity'],data['duration'],data['doctor']))
 		return 200
 
 	def get(self,username):

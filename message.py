@@ -19,6 +19,20 @@ def send_message(doctor,patient,time,date,number):
 
 		)
 
+
+# data = {"username":"carl","name":"paracetoemol","brand":"Crocin","quantity":"1 Strip","duration":"Twice a day","doctor":"Mehul"}
+
+def send_prescription(username,name,brand,quantity,doctor,number):
+	number = "+91"+number
+	msg = client.messages.create(
+
+		body = f"Hello, {username}, your prescription is as follow : \n Medicine :{name}, brand :{brand}, quantity: {quantity}. \n Prescribed by Dr. {doctor}  ",
+		
+		from_ = "+18309884967", 
+		to = number,
+
+		)
+
 def test():
 	msg = client.messages.create(
 
