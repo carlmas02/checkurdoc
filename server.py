@@ -202,7 +202,7 @@ class Prescreption(Resource):
 
 		mobile = database_functions.get_phone_number(data['username'])
 
-		message.send_prescription(data['username'],data["name"],data['brand'],data['quantity'],data['doctor'],mobile['number'])
+		#message.send_prescription(data['username'],data["name"],data['brand'],data['quantity'],data['doctor'],mobile['number'])
 
 		#database_functions.add_patient_prescription((data['username'],data['name'],data['brand'],data['quantity'],data['duration'],data['doctor']))
 		return 200
