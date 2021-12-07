@@ -190,7 +190,7 @@ class Appointments(Resource):
 		resp = database_functions.confirm_appointment(username,doctor_username)
 		
 		mobile = database_functions.get_phone_number(username)
-		#message.send_message(doctor_username,username,data["time"],data["date"],mobile["number"])
+		message.send_message(doctor_username,username,data["time"],data["date"],mobile["number"])
 		if resp == True:
 			return {"success":200}
 		return {"error":400}
@@ -202,7 +202,7 @@ class Prescreption(Resource):
 
 		mobile = database_functions.get_phone_number(data['username'])
 
-		#message.send_prescription(data['username'],data["name"],data['brand'],data['quantity'],data['doctor'],mobile['number'])
+		message.send_prescription(data['username'],data["name"],data['brand'],data['quantity'],data['doctor'],mobile['number'])
 
 		#database_functions.add_patient_prescription((data['username'],data['name'],data['brand'],data['quantity'],data['duration'],data['doctor']))
 		return 200
